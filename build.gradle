@@ -7,13 +7,17 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
 }
+
+plugins {
+    id 'com.palantir.git-version' version '0.12.3'
+}
         
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = project.modVersion
+version = gitVersion()
 group = 'net.mgcup.ayataka' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'AyatakaMod-1.12'
 
