@@ -1,9 +1,12 @@
 package net.mgcup.ayataka.item;
 
+import net.mgcup.ayataka.entity.EntityAyataka;
+import net.mgcup.ayataka.entity.EntityMurderousAyataka;
 import net.mgcup.ayataka.init.ModItems;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
@@ -43,8 +46,8 @@ public class ItemAyataka extends Item {
 
             if (v >= 0.1f) {
                 if (!worldIn.isRemote) {
-                    EntityArrow arrow = new EntityTippedArrow(worldIn, player);
-                    arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0f, v * 3.0f, 1.0f);
+                    EntityArrow arrow = this.isMurderous() ? new EntityMurderousAyataka(worldIn, player) : new EntityAyataka(worldIn, player);
+                    arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0f, 3.0f * v, 1.0f);
 
                     worldIn.spawnEntity(arrow);
                 }
@@ -53,10 +56,6 @@ public class ItemAyataka extends Item {
 
                 if (!player.capabilities.isCreativeMode) {
                     stack.shrink(1);
-
-                    if (stack.isEmpty()) {
-                        player.inventory.deleteStack(stack);
-                    }
                 }
 
                 player.addStat(StatList.getObjectUseStats(this));
